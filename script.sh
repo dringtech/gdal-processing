@@ -6,5 +6,6 @@ for FILE in /data/input/*.geojson; do
   ogr2ogr input.shp ${FILE}
   ogr2ogr -f "GeoJSON" ${TARGET_FILE} input.shp \
       -dialect sqlite \
-      -sql "SELECT ST_union(geometry), DN as geometry FROM input GROUP BY DN"
+      -sql "SELECT ST_union(geometry) as geometry, DN FROM input GROUP BY DN" \
+      -lco RFC7946=YES -lco WRITE_NAME=NO
 done
